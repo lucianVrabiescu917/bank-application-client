@@ -7,7 +7,7 @@ Hello there! Welcome to my Bank Application (client) repository.
 To run the application locally, follow these steps:
 
 1. **Clone the Repository:** 
-git clone <repository_url>
+git clone 'https://github.com/lucianVrabiescu917/bank-application-client.git'
 
 2. **Install Dependencies:**
 npm install
@@ -15,5 +15,5 @@ npm install
 3. **Serve the Application:**
    ng serve
 
-That's it! You're now ready to use the Bank Application (API). If you encounter any issues or have any questions, feel free to reach out.
+That's it! You're now ready to use the Bank Application (client). If you encounter any issues or have any questions, feel free to reach out.
    
