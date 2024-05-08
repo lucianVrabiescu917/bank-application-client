@@ -1,0 +1,41 @@
+<div class="bank-container">
+    <div>
+        <div class="bank-dropdown">
+            <h3>Exporters</h3>
+            <select [(ngModel)]="selectedExporter" (change)="exporterChanged()">
+                <option *ngFor="let exporter of exporters" [ngValue]="exporter">{{ exporter.name }}</option>
+            </select>
+        </div>
+        <app-transaction-form #transactionFormComponent
+                [transaction]="this.selectedTransaction"
+                [pageType]="this.EXPORTER_PAGE"
+                [importer]="undefined"
+                (exporterResponse)="onExporterResponse($event)"
+        ></app-transaction-form>
+    </div>
+    <div class="transaction-list">
+        <h3>Pending transactions</h3>
+        <ul>
+            <li *ngFor="let transaction of transactions" (click)="selectTransaction(transaction)" class="transaction-box">
+                <div>
+                    <strong>Importer:</strong> {{ transaction?.importer?.name }}
+                </div>
+                <div>
+                    <strong>Bank:</strong> {{ transaction?.bank?.name }}
+                </div>
+                <div>
+                    <strong>Exporter:</strong> {{ transaction?.exporter?.name }}
+                </div>
+                <div>
+                    <strong>Status:</strong> {{ transaction?.status }}
+                </div>
+                <div>
+                    <strong>Created Date:</strong> {{ transaction?.createdDate | date: 'short' }}
+                </div>
+                <div *ngIf="transaction?.netPrice">
+                    <strong>Net Price:</strong> {{ transaction?.netPrice}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

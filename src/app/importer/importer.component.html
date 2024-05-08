@@ -1,0 +1,40 @@
+<div class="importer-container">
+    <div class="importer-dropdown">
+        <h3>Importers</h3>
+        <select [(ngModel)]="selectedImporter" (change)="importerChanged()">
+            <option *ngFor="let importer of importers" [ngValue]="importer">{{ importer.name }}</option>
+        </select>
+    </div>
+    <app-transaction-form #transactionFormComponent #menu
+        [transaction]="this.selectedTransaction ? this.selectedTransaction : {importer: selectedImporter}"
+        [pageType]="this.IMPORTER_PAGE"
+        [importer]="selectedImporter"
+        [importerCanSubmit]="importerCanSubmit"
+        (importerSubmit)="onImporterSubmit($event)"
+    ></app-transaction-form>
+    <div class="transaction-list" #toggleButton>
+        <h3>Transaction History</h3>
+        <ul>
+            <li *ngFor="let transaction of transactions" (click)="selectTransaction(transaction)" class="transaction-box">
+                <div>
+                    <strong>Importer:</strong> {{ transaction?.importer?.name }}
+                </div>
+                <div>
+                    <strong>Bank:</strong> {{ transaction?.bank?.name }}
+                </div>
+                <div>
+                    <strong>Exporter:</strong> {{ transaction?.exporter?.name }}
+                </div>
+                <div>
+                    <strong>Status:</strong> {{ transaction?.status }}
+                </div>
+                <div>
+                    <strong>Created Date:</strong> {{ transaction?.createdDate | date: 'short' }}
+                </div>
+                <div *ngIf="transaction?.netPrice">
+                    <strong>Net Price:</strong> {{ transaction?.netPrice}}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="form-container">
+    <form [formGroup]="transactionForm">
+        <input *ngIf="!isImporterPage"  type="text" formControlName="importerName" placeholder="Importer">
+
+        <select *ngIf="isImporterPage" formControlName="bank" >
+            <option *ngFor="let bank of banks"
+                    [ngValue]="bank"
+                    [selected]="bank?.name === transactionForm.get('bank')?.value?.name">
+                {{ bank.name }}
+            </option>
+        </select>
+        <input *ngIf="!isImporterPage"  type="text" formControlName="bankName" placeholder="Bank">
+
+
+        <select *ngIf="isImporterPage" formControlName="exporter">
+            <option *ngFor="let exporter of exporters"
+                    [ngValue]="exporter"
+                    [selected]="exporter?.name === transactionForm.get('exporter')?.value?.name">
+                {{ exporter.name }}
+            </option>
+        </select>
+        <input *ngIf="!isImporterPage"  type="text" formControlName="exporterName" placeholder="Exporter">
+
+        <input type="text" formControlName="bankAccountNumber" placeholder="Bank Account Number">
+        <input type="text" formControlName="typeOfGoods" placeholder="Type of Goods">
+        <select formControlName="unit">
+            <option *ngFor="let unit of unitOptions" [ngValue]="unit">{{ unit }}</option>
+        </select>
+        <input type="text" formControlName="receivingAddress" placeholder="Receiving Address">
+        <input type="text" formControlName="phone" placeholder="Phone">
+        <input type="email" formControlName="email" placeholder="Email">
+        <input type="text" formControlName="comments" placeholder="Comments">
+        <input type="text" formControlName="netPrice" placeholder="Net Price">
+        <input type="text" formControlName="exporterComment" placeholder="Exporter Comment">
+        <input type="text" formControlName="deliveryDate" placeholder="Delivery Date">
+
+        <button [disabled]="transaction?.status == ACCEPTED || transaction?.status == DECLINED"
+                *ngIf="isImporterPage" type="submit" (click)="onSubmit()"
+                [ngClass]="{ 'disabled': transaction?.status == ACCEPTED || transaction?.status == DECLINED}">Submit to Bank</button>
+
+        <button [disabled]="transaction?.status == ACCEPTED " *ngIf="isBankPage"
+                type="submit" class="green-button" (click)="onAccept()"
+                [ngClass]="{ 'disabled': transaction?.status == ACCEPTED }">Accept</button>
+        <button [disabled]="transaction?.status == ACCEPTED" *ngIf="isBankPage"
+                type="submit" class="red-button" (click)="onDecline()"
+                [ngClass]="{ 'disabled': transaction?.status == ACCEPTED }">Decline</button>
+
+        <button *ngIf="isExporterPage" type="submit" class="green-button" (click)="onAcceptExporter()">Accept</button>
+        <button *ngIf="isExporterPage" type="submit" class="red-button" (click)="onDeclineExporter()">Decline</button>
+
+
+    </form>
+</div>
+<app-global-error [errorMessage]="this.errorMessage"></app-global-error>
